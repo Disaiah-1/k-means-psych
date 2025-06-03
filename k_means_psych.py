@@ -8,7 +8,6 @@ import plotly.graph_objs as go
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 
-# Load data
 df = pd.read_csv("/Users/zainabnda-isaiah/Data visualization/human_cognitive_performance.csv")
 
 # Show nulls and initial size
@@ -47,8 +46,6 @@ for i in range(1, 11):
 # plt.grid(True)
 # plt.show()
 
-#Last elbow on the graph landed on numer 5, so 5 is the optiman number of clusters. Making the clustering algorithm.
-#When initializing centroids, make sure you assign them to the same name as in the elbow method to override their original number which is 10. If not you will have 10 centroids in your final output.
 kmean = KMeans(n_clusters=20, init='k-means++', random_state=0)
 ymodel = kmean.fit_predict(X_train)
 
@@ -57,7 +54,7 @@ train_df = pd.DataFrame(X_train, columns=["Age", "Caffeine_Intake"])
 train_df["Memory_Test_Score"] = Y_train
 train_df["label3"] = ymodel
 
-# Create 3D scatter plot
+# Created a 3D scatter plot for the 3 features.
 trace1 = go.Scatter3d(
     x=train_df['Age'],
     y=train_df['Caffeine_Intake'],
@@ -88,7 +85,7 @@ centroids = kmean.cluster_centers_
 trace2 = go.Scatter3d(
     x=centroids[:, 0],  # Age
     y=centroids[:, 1],  # Caffeine Intake
-    z=[np.mean(Y_train)] * len(centroids),  # Use average memory score for Z position (or compute properly if needed)
+    z=[np.mean(Y_train)] * len(centroids),  # Use average memory score for Z position 
     mode='markers',
     marker=dict(
         color='red',
